@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-#define THREADS 1
+#define THREADS 16
 #define ITERATIONS 2e09
 
 double pi = 0.0;
