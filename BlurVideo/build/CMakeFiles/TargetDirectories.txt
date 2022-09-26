@@ -1,0 +1,3 @@
+/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/CMakeFiles/main.dir
+/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/CMakeFiles/edit_cache.dir
+/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/CMakeFiles/rebuild_cache.dir
