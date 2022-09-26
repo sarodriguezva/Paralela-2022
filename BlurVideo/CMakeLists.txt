@@ -8,7 +8,7 @@ enable_testing()
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(BlurVideo main.cpp)
+add_executable(BlurVideo src/main.cpp)
 
 target_link_libraries(BlurVideo ${OpenCV_LIBS})
 

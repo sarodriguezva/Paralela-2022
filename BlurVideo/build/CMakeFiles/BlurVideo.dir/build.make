@@ -69,28 +69,28 @@ include CMakeFiles/BlurVideo.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/BlurVideo.dir/flags.make
 
-CMakeFiles/BlurVideo.dir/main.cpp.o: CMakeFiles/BlurVideo.dir/flags.make
-CMakeFiles/BlurVideo.dir/main.cpp.o: ../main.cpp
-CMakeFiles/BlurVideo.dir/main.cpp.o: CMakeFiles/BlurVideo.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BlurVideo.dir/main.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BlurVideo.dir/main.cpp.o -MF CMakeFiles/BlurVideo.dir/main.cpp.o.d -o CMakeFiles/BlurVideo.dir/main.cpp.o -c /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/main.cpp
+CMakeFiles/BlurVideo.dir/src/main.cpp.o: CMakeFiles/BlurVideo.dir/flags.make
+CMakeFiles/BlurVideo.dir/src/main.cpp.o: ../src/main.cpp
+CMakeFiles/BlurVideo.dir/src/main.cpp.o: CMakeFiles/BlurVideo.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BlurVideo.dir/src/main.cpp.o"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/BlurVideo.dir/src/main.cpp.o -MF CMakeFiles/BlurVideo.dir/src/main.cpp.o.d -o CMakeFiles/BlurVideo.dir/src/main.cpp.o -c /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main.cpp
 
-CMakeFiles/BlurVideo.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BlurVideo.dir/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/main.cpp > CMakeFiles/BlurVideo.dir/main.cpp.i
+CMakeFiles/BlurVideo.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BlurVideo.dir/src/main.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main.cpp > CMakeFiles/BlurVideo.dir/src/main.cpp.i
 
-CMakeFiles/BlurVideo.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BlurVideo.dir/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/main.cpp -o CMakeFiles/BlurVideo.dir/main.cpp.s
+CMakeFiles/BlurVideo.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BlurVideo.dir/src/main.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main.cpp -o CMakeFiles/BlurVideo.dir/src/main.cpp.s
 
 # Object files for target BlurVideo
 BlurVideo_OBJECTS = \
-"CMakeFiles/BlurVideo.dir/main.cpp.o"
+"CMakeFiles/BlurVideo.dir/src/main.cpp.o"
 
 # External object files for target BlurVideo
 BlurVideo_EXTERNAL_OBJECTS =
 
-BlurVideo: CMakeFiles/BlurVideo.dir/main.cpp.o
+BlurVideo: CMakeFiles/BlurVideo.dir/src/main.cpp.o
 BlurVideo: CMakeFiles/BlurVideo.dir/build.make
 BlurVideo: /usr/local/lib/libopencv_gapi.so.4.6.0
 BlurVideo: /usr/local/lib/libopencv_highgui.so.4.6.0
