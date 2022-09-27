@@ -45,7 +45,7 @@ void myBlur(Mat face, Point tl, Point br, int r){
 }
 
 
-int main(){
+int main(int argc, char **argv){
 
     //Load Video
     string path = "../resources/videoIn.mp4";
