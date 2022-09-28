@@ -7,41 +7,51 @@
 using namespace cv;
 using namespace std;
 
-Mat summed_table(Mat img, int w, int h){
-    Mat table(w,h, CV_8UC3, Scalar(0,0,0));
-    table.at<Vec3b>(0,0) = img.at<Vec3b>(0,0);
+int r = 10;
 
+Mat summed_table(Mat ROI, int w, int h){
+    Mat table;
+    table = Mat::zeros(ROI.size(), CV_32SC3);
+
+    table.at<Vec3i>(0,0) = ROI.at<Vec3i>(0,0);
     for (int x = 1; x < w; x++){
-        table.at<Vec3b>(x,0) += img.at<Vec3b>(x-1,0);
+        table.at<Vec3i>(0,x) = ROI.at<Vec3i>(0,x) + table.at<Vec3i>(0,x-1);
     }
 
     for (int y = 1; y < h; y++){
-        table.at<Vec3b>(0,y) += img.at<Vec3b>(0,y-1);
+        table.at<Vec3i>(y,0) = ROI.at<Vec3i>(y,0) + table.at<Vec3i>(y-1,0);
     }
 
     for (int y = 1; y < h-1; y++){
         for (int x = 1; x < w-1; x++){
-            table.at<Vec3b>(x,y) = img.at<Vec3b>(x,y) + table.at<Vec3b>(x,y-1) + table.at<Vec3b>(x-1,y) - table.at<Vec3b>(x-1,y-1);
+            table.at<Vec3i>(y,x) = ROI.at<Vec3i>(y,x) + table.at<Vec3i>(y-1,x) + table.at<Vec3i>(y,x-1) - table.at<Vec3i>(y-1,x-1);
         }
     }
 
     return table;
 }
 
-void myBlur(Mat face, Point tl, Point br, int r){
-    int w = br.x - tl.x;
-    int h = br.y - tl.y;
-
+void myBlur(Mat face, int w, int h){
     int area = pow(2*r+1, 2);
+    
     Mat table = summed_table(face, w, h);
 
     for (int y = r+1; y < h-r-1; y++){
         for (int x = r+1; x < w-r-1; x++){
-            face.at<Vec3b>(x,y) = table.at<Vec3b>(x+r, y+r) - table.at<Vec3b>(x-r-1, y+r) 
-                                - table.at<Vec3b>(x+r, y-r-1) + table.at<Vec3b>(x-r-1, y-r-1);
-            face.at<Vec3b>(x,y) /= area;
+            face.at<Vec3i>(y,x) = table.at<Vec3i>(y+r, x+r) - table.at<Vec3i>(y+r, x-r-1) 
+                                - table.at<Vec3i>(y-r-1, x+r) + table.at<Vec3i>(y-r-1, x-r-1);
+            face.at<Vec3i>(y,x) /= area;
         }
     }
+}
+
+Rect setROI(Rect faceROI){
+    Rect ROI = faceROI;
+    ROI.x -= r;
+    ROI.y -= r;
+    ROI.width += 2*r;
+    ROI.height += 2*r;
+    return ROI;
 }
 
 
@@ -81,16 +91,25 @@ int main(int argc, char **argv){
 
         vector<Rect> faces;
         faceCascade.detectMultiScale(img_gray, faces, 1.1, 10);
-
+        
         for (int i = 0; i < faces.size(); i++){
-            Point top_left = faces[i].tl();
-            Point bot_right = faces[i].br();
-            rectangle(img, top_left, bot_right, Scalar(0,0,0), 3);
-            Mat faceROI = img(faces[i]);
-            myBlur(faceROI, top_left, bot_right, 10);
+            img.convertTo(img, CV_32SC3);
+
+            Rect R = setROI(faces[i]);
+            Point top_left = R.tl();
+            Point bot_right = R.br();
+
+            int w = bot_right.x - top_left.x;
+            int h = bot_right.y - top_left.y;
+
+            Mat faceROI = img(R);
+            faceROI.convertTo(faceROI, CV_32SC3);
+
+            myBlur(faceROI, w, h);
+            img.convertTo(img, CV_8UC3);
         }
 
-        imshow("Video Face Detection", img);
+        imshow("Blurred Face Detection", img);
 
         if (waitKey(1) == 'q'){
             break;
