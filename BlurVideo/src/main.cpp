@@ -107,11 +107,13 @@ Note:
 + Every image and ROI is originally in a CV_8UC3 format (8 unsigned bits and 3 channels).
 + The images need to be converted to CV_32SC3 for pixels arithmetic; then the results need to be returned to the original format.
 + The video can be played in runtime. The framerate depends on the computer.
-*/
-int main(int argc, char **argv){
 
+*/
+int main(int argc, char *argv[]){
+    int THREADS = stoi(argv[3]);
     //Load Video
-    string path = "../resources/videoIn.mp4";
+    //"../resources/videoIn.mp4"
+    string path = argv[1];
     VideoCapture cap(path);
 
     // Check if camera opened successfully
@@ -129,7 +131,8 @@ int main(int argc, char **argv){
         exit(-1);
     }
     
-    VideoWriter video("../resources/videoOut.avi",cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
+    //"../resources/videoOut.avi"
+    VideoWriter video(argv[2],cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
     
     while (true){
         Mat img;
@@ -185,3 +188,7 @@ int main(int argc, char **argv){
     
     return 0;
 }
+
+//run program: /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/BlurVideo ../resources/videoIn.mp4 ../resources/videoOut.avi 1
+//run program (Generic): build/BlurVideo ../resources/videoIn.mp4 ../resources/videoOut.avi 1
+//BlurVideo pathToVideoIn pathToVideoOut THREADS
