@@ -7,9 +7,25 @@
 using namespace cv;
 using namespace std;
 
-//Blur Radio
+//Blur Radio - CONSTANT
 int r = 10;
 
+/*
+Auxiliar function. It creates a preffix sum array from any ROI.
+It runs in O(w*h).
+
+Creates an empty Opencv matrix (Mat) with signed-integers 3-tuples (CV_32SC3 pixel) in it.
+The matrix is filled with the accumulative sum for each ROI's pixel (y,x) from (0,0) to (y-1,x-1).
+Then, the matrix is returned.
+
+Notes: 
++ CV_32SC3 is an OpenCV type and stands for 32bits Signed Channel-3,
+which means that we are going with 3-Channel or RGB pixels whose respective value could vary from -2**31-1 to 2**31-1
++ This will be sufficient up to 1280x720p images. 
++ OpenCV doesn't define any larger type.
++ Vec3i is another way to refer to this 3-integer-tuples.
+
+*/
 Mat summed_table(Mat ROI, int w, int h){
     Mat table;
     table = Mat::zeros(ROI.size(), CV_32SC3);
@@ -32,6 +48,20 @@ Mat summed_table(Mat ROI, int w, int h){
     return table;
 }
 
+/*
+Main box-blur function.
+It creates the preffix sum table and uses it for replacing in the original image the new averaged pixels.
+
+Placing a new averaged pixel takes O(1) time.
+Filling all the ROI in the original image takes O(w*h) time.
+The function is adapted for supporting a variable blur radio.
+
+Note:
++ Despite of the function receives a Region Of Interest (ROI), any change in this region yields
+the change on the original image. So the blur filter applies in-place.
+
+*/
+
 void myBlur(Mat face, int w, int h){
     int area = pow(2*r+1, 2);
     
@@ -46,6 +76,13 @@ void myBlur(Mat face, int w, int h){
     }
 }
 
+/*
+setROI function.
+Box-blur has the problem of keeping unchanged the pixels who are at a distance less or equal than the radius from the ROI border.
+In order to blurring all the detected face area, the function does some geometrical fixes and manages the corner cases.
+
+The function runs in O(1) time and O(1) memory.
+*/
 Rect setROI(Rect faceROI){
     Rect ROI = faceROI;
     
@@ -59,7 +96,18 @@ Rect setROI(Rect faceROI){
     return ROI;
 }
 
+/*
+Main function.
+Loads the video and haar cascade face recognition data. Then it sets the output video container.
+It process every input-video frame, resizes it to a 640x480 format and does a face recognition in grayscale mode.
+Then, every face area is processed, blurred and then saved into the output video.
+When the video is successfully saved, the funtion frees the memory.
 
+Note:
++ Every image and ROI is originally in a CV_8UC3 format (8 unsigned bits and 3 channels).
++ The images need to be converted to CV_32SC3 for pixels arithmetic; then the results need to be returned to the original format.
++ The video can be played in runtime. The framerate depends on the computer.
+*/
 int main(int argc, char **argv){
 
     //Load Video
@@ -104,7 +152,7 @@ int main(int argc, char **argv){
 
             Rect R = setROI(faces[i]);
 
-            rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 255,0), 3);
+            //rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 255,0), 3);
             
             Point top_left = R.tl();
             Point bot_right = R.br();
@@ -112,7 +160,7 @@ int main(int argc, char **argv){
             int w = bot_right.x - top_left.x;
             int h = bot_right.y - top_left.y;
 
-            rectangle(img, top_left, bot_right, Scalar(0,0,0), 3);
+            //rectangle(img, top_left, bot_right, Scalar(0,0,0), 3);
 
             Mat faceROI = img(R);
             faceROI.convertTo(faceROI, CV_32SC3);
