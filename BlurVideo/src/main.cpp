@@ -7,6 +7,7 @@
 using namespace cv;
 using namespace std;
 
+//Blur Radio
 int r = 10;
 
 Mat summed_table(Mat ROI, int w, int h){
@@ -47,10 +48,14 @@ void myBlur(Mat face, int w, int h){
 
 Rect setROI(Rect faceROI){
     Rect ROI = faceROI;
-    ROI.x -= r;
-    ROI.y -= r;
-    ROI.width += 2*r;
-    ROI.height += 2*r;
+    
+    if(ROI.x - r >= 0 && ROI.y - r >= 0 && ROI.x + ROI.width + 2*r <= 640 && ROI.y + ROI.height + 2*r <= 480){
+        ROI.x -= r;
+        ROI.y -= r;
+        ROI.width += 2*r;
+        ROI.height += 2*r;
+    }
+    
     return ROI;
 }
 
@@ -76,6 +81,8 @@ int main(int argc, char **argv){
         exit(-1);
     }
     
+    VideoWriter video("../resources/videoOut.avi",cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
+    
     while (true){
         Mat img;
         cap >> img;
@@ -96,11 +103,16 @@ int main(int argc, char **argv){
             img.convertTo(img, CV_32SC3);
 
             Rect R = setROI(faces[i]);
+
+            rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 255,0), 3);
+            
             Point top_left = R.tl();
             Point bot_right = R.br();
 
             int w = bot_right.x - top_left.x;
             int h = bot_right.y - top_left.y;
+
+            rectangle(img, top_left, bot_right, Scalar(0,0,0), 3);
 
             Mat faceROI = img(R);
             faceROI.convertTo(faceROI, CV_32SC3);
@@ -109,6 +121,7 @@ int main(int argc, char **argv){
             img.convertTo(img, CV_8UC3);
         }
 
+        video.write(img);
         imshow("Blurred Face Detection", img);
 
         if (waitKey(1) == 'q'){
@@ -116,7 +129,9 @@ int main(int argc, char **argv){
         }
     }
 
+    cout << "Video guardado con éxito" << endl;
     cap.release();
+    video.release();
 
     destroyAllWindows();
     
