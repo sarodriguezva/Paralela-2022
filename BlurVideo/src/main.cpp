@@ -7,7 +7,7 @@
 using namespace cv;
 using namespace std;
 
-#define THREADS 16
+//Blur Radio
 int r = 10;
 
 Mat summed_table(Mat ROI, int w, int h){
@@ -48,12 +48,14 @@ void myBlur(Mat face, int w, int h){
 
 Rect setROI(Rect faceROI){
     Rect ROI = faceROI;
-    if(ROI.x - r >= 0 && ROI.y - r >= 0 && ROI.width + 2*r <= 640 && ROI.height + 2*r <= 480){
+    
+    if(ROI.x - r >= 0 && ROI.y - r >= 0 && ROI.x + ROI.width + 2*r <= 640 && ROI.y + ROI.height + 2*r <= 480){
         ROI.x -= r;
         ROI.y -= r;
         ROI.width += 2*r;
         ROI.height += 2*r;
     }
+    
     return ROI;
 }
 
@@ -79,7 +81,7 @@ int main(int argc, char **argv){
         exit(-1);
     }
     
-    VideoWriter video("../resources/outVideo.avi",cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
+    VideoWriter video("../resources/videoOut.avi",cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
     
     while (true){
         Mat img;
@@ -127,6 +129,7 @@ int main(int argc, char **argv){
         }
     }
 
+    cout << "Video guardado con éxito" << endl;
     cap.release();
     video.release();
 
