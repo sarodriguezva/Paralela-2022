@@ -46,7 +46,7 @@ int main(int argc, char **argv){
         R.width += 2*r;
         R.height += 2*r;
 
-        //rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 255,0), 3);
+        rectangle(img, faces[i].tl(), faces[i].br(), Scalar(0, 255,0), 3);
 
         Point top_left = R.tl();
         Point bot_right = R.br();
@@ -54,13 +54,14 @@ int main(int argc, char **argv){
         int w = bot_right.x - top_left.x;
         int h = bot_right.y - top_left.y;
         
-        //rectangle(img, top_left, bot_right, Scalar(0,0,0), 3);
+        rectangle(img, top_left, bot_right, Scalar(0,0,0), 3);
 
         img.convertTo(img, CV_32SC3);
         Mat faceROI = img(R);
 
         faceROI.convertTo(faceROI, CV_32SC3);
 
+        
         Mat table;
         table = Mat::zeros(faceROI.size(), CV_32SC3);
 
@@ -86,6 +87,7 @@ int main(int argc, char **argv){
                 faceROI.at<Vec3i>(y,x) /= area;
             }
         }
+        
 
         img.convertTo(img, CV_8UC3);
 
