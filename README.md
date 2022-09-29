@@ -6,6 +6,7 @@ Instalar OpenCV4 - https://www.geeksforgeeks.org/how-to-install-opencv-in-c-on-l
 
 Arreglar problema: Inappropriate ioctl for device - https://www.edureka.co/community/52428/opencv-unable-stop-the-stream-inappropriate-ioctl-for-device
 
+Montar proyecto en Visual Studio Code - https://youtu.be/m9HBM1m_EMU
 
 Cargar y buildear el proyecto preferiblemente usando la extensión CMake de VSCode.
 
