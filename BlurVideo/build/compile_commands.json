@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build",
-  "command": "/usr/bin/g++  -isystem /usr/local/include/opencv4 -g -std=gnu++14 -o CMakeFiles/BlurVideo.dir/src/main.cpp.o -c /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main.cpp",
-  "file": "/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main.cpp"
+  "command": "/usr/bin/g++  -isystem /usr/local/include/opencv4 -g -fopenmp -std=gnu++14 -o CMakeFiles/BlurVideo.dir/tests/main.cpp.o -c /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/tests/main.cpp",
+  "file": "/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/tests/main.cpp"
 }
 ]
