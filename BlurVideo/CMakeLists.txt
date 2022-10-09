@@ -9,7 +9,7 @@ find_package(OpenCV REQUIRED)
 find_package(OpenMP REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(BlurVideo tests/main.cpp)
+add_executable(BlurVideo src/main_omp.cpp)
 
 target_link_libraries(BlurVideo ${OpenCV_LIBS} OpenMP::OpenMP_CXX)
 

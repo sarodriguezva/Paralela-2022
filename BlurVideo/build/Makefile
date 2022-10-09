@@ -523,29 +523,29 @@ BlurVideo/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/build
 .PHONY : BlurVideo/fast
 
-tests/main.o: tests/main.cpp.o
-.PHONY : tests/main.o
+src/main_omp.o: src/main_omp.cpp.o
+.PHONY : src/main_omp.o
 
 # target to build an object file
-tests/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/tests/main.cpp.o
-.PHONY : tests/main.cpp.o
+src/main_omp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o
+.PHONY : src/main_omp.cpp.o
 
-tests/main.i: tests/main.cpp.i
-.PHONY : tests/main.i
+src/main_omp.i: src/main_omp.cpp.i
+.PHONY : src/main_omp.i
 
 # target to preprocess a source file
-tests/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/tests/main.cpp.i
-.PHONY : tests/main.cpp.i
+src/main_omp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/src/main_omp.cpp.i
+.PHONY : src/main_omp.cpp.i
 
-tests/main.s: tests/main.cpp.s
-.PHONY : tests/main.s
+src/main_omp.s: src/main_omp.cpp.s
+.PHONY : src/main_omp.s
 
 # target to generate assembly for a file
-tests/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/tests/main.cpp.s
-.PHONY : tests/main.cpp.s
+src/main_omp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BlurVideo.dir/build.make CMakeFiles/BlurVideo.dir/src/main_omp.cpp.s
+.PHONY : src/main_omp.cpp.s
 
 # Help Target
 help:
@@ -587,9 +587,9 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... BlurVideo"
-	@echo "... tests/main.o"
-	@echo "... tests/main.i"
-	@echo "... tests/main.s"
+	@echo "... src/main_omp.o"
+	@echo "... src/main_omp.i"
+	@echo "... src/main_omp.s"
 .PHONY : help
 
 

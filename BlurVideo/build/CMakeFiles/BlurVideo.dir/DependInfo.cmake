@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/tests/main.cpp" "CMakeFiles/BlurVideo.dir/tests/main.cpp.o" "gcc" "CMakeFiles/BlurVideo.dir/tests/main.cpp.o.d"
+  "/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main_omp.cpp" "CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o" "gcc" "CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o.d"
   )
 
 # Targets to which this target links.
