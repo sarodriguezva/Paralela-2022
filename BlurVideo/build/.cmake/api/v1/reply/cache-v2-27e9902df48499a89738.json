@@ -486,6 +486,18 @@
 			"value" : "CMAKE_DLLTOOL-NOTFOUND"
 		},
 		{
+			"name" : "CMAKE_EDIT_COMMAND",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to cache edit program executable."
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "/usr/bin/cmake-gui"
+		},
+		{
 			"name" : "CMAKE_EXECUTABLE_FORMAT",
 			"properties" : 
 			[
@@ -1103,7 +1115,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "NO"
+			"value" : "OFF"
 		},
 		{
 			"name" : "CMAKE_SKIP_RPATH",
@@ -1119,7 +1131,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "NO"
+			"value" : "OFF"
 		},
 		{
 			"name" : "CMAKE_STATIC_LINKER_FLAGS",
@@ -1243,7 +1255,7 @@
 				}
 			],
 			"type" : "BOOL",
-			"value" : "FALSE"
+			"value" : "OFF"
 		},
 		{
 			"name" : "COVERAGE_COMMAND",
@@ -1968,6 +1980,18 @@
 			],
 			"type" : "UNINITIALIZED",
 			"value" : ""
+		},
+		{
+			"name" : "WITH_OPENMP",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : ""
+				}
+			],
+			"type" : "BOOL",
+			"value" : "ON"
 		}
 	],
 	"kind" : "cache",

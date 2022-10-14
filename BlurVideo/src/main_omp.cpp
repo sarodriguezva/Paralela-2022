@@ -120,6 +120,7 @@ int main(int argc, char *argv[]){
     //Load Video
     //"../resources/videoIn.mp4"
     string path = argv[1];
+    cout << path << " " << THREADS << endl;
     VideoCapture cap(path);
 
     // Check if camera opened successfully
@@ -179,7 +180,7 @@ int main(int argc, char *argv[]){
         }
 
         video.write(img);
-        imshow("Blurred Face Detection", img);
+        //imshow("Blurred Face Detection", img);
 
         if (waitKey(1) == 'q'){
             break;
@@ -196,5 +197,6 @@ int main(int argc, char *argv[]){
 }
 
 //run program: /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/BlurVideo ../resources/videoIn.mp4 ../resources/videoOut.avi 1
+//run program: /home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/build/BlurVideo ../resources/videoInShort.mp4 ../resources/videoOutShort.avi 1
 //run program (Generic): build/BlurVideo ../resources/videoIn.mp4 ../resources/videoOut.avi 1
 //BlurVideo pathToVideoIn pathToVideoOut THREADS

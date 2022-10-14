@@ -173,7 +173,7 @@ int main(int argc, char *argv[]){
         }
 
         video.write(img);
-        imshow("Blurred Face Detection", img);
+        //imshow("Blurred Face Detection", img);
 
         if (waitKey(1) == 'q'){
             break;
