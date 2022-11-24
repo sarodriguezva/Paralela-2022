@@ -3,7 +3,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/objdetect.hpp>
 #include <iostream>
-#include <mpi.h>
+#include "mpi.h"
 
 using namespace cv;
 using namespace std;
@@ -69,9 +69,7 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     int range = inner_h / procNum;  //Charge for rank > 0
     int range_first = inner_h - range*(procNum - 1);  //Residual is loaded to rank 0
 
-    if (rank == 0){
-        Mat table = summed_table(face, w, h);
-    }
+    Mat table = summed_table(face, w, h);
 
     int init_row, final_row;
     int init = r+1;
@@ -138,31 +136,28 @@ int main(int argc, char *argv[]){
 
     int THREADS = stoi(argv[3]);
 
-    if (rank == 0){
-        //Load Video
-        //"../resources/videoIn.mp4"
-        string path = argv[1];
-        VideoCapture cap(path);
+    //Load Video
+    //"../resources/videoIn.mp4"
+    string path = argv[1];
+    VideoCapture cap(path);
 
-        // Check if camera opened successfully
-        if (!cap.isOpened()){
-            perror("Error opening video stream or file");
-            exit(-1);
-        }
-
-        //Load haarcascade
-        CascadeClassifier faceCascade;
-        faceCascade.load("../resources/haarcascade_frontalface_default.xml");
-
-        if (faceCascade.empty()){
-            perror("XML File not loaded");
-            exit(-1);
-        }
-
-        //"../resources/videoOut.avi"
-        VideoWriter video(argv[2],cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
+    // Check if camera opened successfully
+    if (!cap.isOpened()){
+        perror("Error opening video stream or file");
+        exit(-1);
     }
-    
+
+    //Load haarcascade
+    CascadeClassifier faceCascade;
+    faceCascade.load("../resources/haarcascade_frontalface_default.xml");
+
+    if (faceCascade.empty()){
+        perror("XML File not loaded");
+        exit(-1);
+    }
+
+    //"../resources/videoOut.avi"
+    VideoWriter video(argv[2],cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
 
     while (true){
         Mat img;
@@ -194,12 +189,15 @@ int main(int argc, char *argv[]){
             Mat faceROI = img(R);
             faceROI.convertTo(faceROI, CV_32SC3);
 
-            myBlur(faceROI, w, h);
+            myBlur(faceROI, w, h, npoc, rank);
+            MPI_Barrier(MPI_COMM_WORLD);
             img.convertTo(img, CV_8UC3);
         }
 
+        MPI_Barrier(MPI_COMM_WORLD);
         video.write(img);
     }
+    MPI_Barrier(MPI_COMM_WORLD);
 
     cout << "Video guardado con éxito" << endl;
     cap.release();
