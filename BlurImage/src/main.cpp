@@ -61,7 +61,6 @@ int main(int argc, char **argv){
 
         faceROI.convertTo(faceROI, CV_32SC3);
 
-        
         Mat table;
         table = Mat::zeros(faceROI.size(), CV_32SC3);
 
@@ -73,7 +72,7 @@ int main(int argc, char **argv){
         for (int y = 1; y < h; y++){
             table.at<Vec3i>(y,0) = faceROI.at<Vec3i>(y,0) + table.at<Vec3i>(y-1,0);
         }
-        
+
         for (int y = 1; y < h-1; y++){
             for (int x = 1; x < w-1; x++){
                 table.at<Vec3i>(y,x) = faceROI.at<Vec3i>(y,x) + table.at<Vec3i>(y-1,x) + table.at<Vec3i>(y,x-1) - table.at<Vec3i>(y-1,x-1);
@@ -91,12 +90,8 @@ int main(int argc, char **argv){
 
         img.convertTo(img, CV_8UC3);
 
-        imshow("Blurred", img);
+        imwrite("../resources/lenna_filter.png", img);
     }
 
-    if (waitKey(0) == 'q'){
-        return 0;
-    }
-    
     return 0;
 }
