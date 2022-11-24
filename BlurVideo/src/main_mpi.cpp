@@ -129,7 +129,7 @@ Note:
 
 */
 int main(int argc, char *argv[]){
-    int nproc, rank;
+    int nprocs, rank;
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -189,7 +189,7 @@ int main(int argc, char *argv[]){
             Mat faceROI = img(R);
             faceROI.convertTo(faceROI, CV_32SC3);
 
-            myBlur(faceROI, w, h, npoc, rank);
+            myBlur(faceROI, w, h, nprocs, rank);
             MPI_Barrier(MPI_COMM_WORLD);
             img.convertTo(img, CV_8UC3);
         }
