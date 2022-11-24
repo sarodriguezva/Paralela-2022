@@ -12,7 +12,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(BlurVideo src/main_mpi.cpp)
 
-target_link_libraries(BlurVideo ${OpenCV_LIBS} OpenMP::OpenMP_CXX PUBLIC MPI::MPI_CXX)
+target_link_libraries(BlurVideo ${OpenCV_LIBS} OpenMP::OpenMP_CXX MPI::MPI_CXX)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
