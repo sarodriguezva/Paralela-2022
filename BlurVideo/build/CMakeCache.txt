@@ -308,6 +308,71 @@ MEMORYCHECK_COMMAND:FILEPATH=MEMORYCHECK_COMMAND-NOTFOUND
 //File that contains suppressions for the memory checker
 MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=
 
+//Executable for running MPI programs.
+MPIEXEC_EXECUTABLE:FILEPATH=/usr/bin/mpiexec
+
+//Maximum number of processors available to run MPI applications.
+MPIEXEC_MAX_NUMPROCS:STRING=4
+
+//Flag used by MPI to specify the number of processes for mpiexec;
+// the next option will be the number of processes.
+MPIEXEC_NUMPROC_FLAG:STRING=-n
+
+//These flags will be placed after all flags passed to mpiexec.
+MPIEXEC_POSTFLAGS:STRING=
+
+//These flags will be directly before the executable that is being
+// run by mpiexec.
+MPIEXEC_PREFLAGS:STRING=
+
+//MPI C additional include directories
+MPI_C_ADDITIONAL_INCLUDE_DIRS:STRING=
+
+//MPI compiler for C
+MPI_C_COMPILER:FILEPATH=/usr/bin/mpicc
+
+//MPI C compiler wrapper include directories
+MPI_C_COMPILER_INCLUDE_DIRS:STRING=/usr/lib/x86_64-linux-gnu/openmpi/include;/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi
+
+//MPI C compilation definitions
+MPI_C_COMPILE_DEFINITIONS:STRING=
+
+//MPI C compilation options
+MPI_C_COMPILE_OPTIONS:STRING=
+
+//Path to a file.
+MPI_C_HEADER_DIR:PATH=MPI_C_HEADER_DIR-NOTFOUND
+
+//MPI C libraries to link against
+MPI_C_LIB_NAMES:STRING=mpi;open-rte;open-pal;hwloc;event_core;event_pthreads;m;z
+
+//MPI C linker flags
+MPI_C_LINK_FLAGS:STRING=-L/usr/lib/x86_64-linux-gnu/openmpi/lib
+
+//Location of the event_core library for MPI
+MPI_event_core_LIBRARY:FILEPATH=MPI_event_core_LIBRARY-NOTFOUND
+
+//Location of the event_pthreads library for MPI
+MPI_event_pthreads_LIBRARY:FILEPATH=MPI_event_pthreads_LIBRARY-NOTFOUND
+
+//Location of the hwloc library for MPI
+MPI_hwloc_LIBRARY:FILEPATH=MPI_hwloc_LIBRARY-NOTFOUND
+
+//Location of the m library for MPI
+MPI_m_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libm.so
+
+//Location of the mpi library for MPI
+MPI_mpi_LIBRARY:FILEPATH=MPI_mpi_LIBRARY-NOTFOUND
+
+//Location of the open-pal library for MPI
+MPI_open-pal_LIBRARY:FILEPATH=MPI_open-pal_LIBRARY-NOTFOUND
+
+//Location of the open-rte library for MPI
+MPI_open-rte_LIBRARY:FILEPATH=MPI_open-rte_LIBRARY-NOTFOUND
+
+//Location of the z library for MPI
+MPI_z_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
+
 //The directory containing a CMake configuration file for OpenCV.
 OpenCV_DIR:PATH=/usr/local/lib/cmake/opencv4
 
@@ -328,6 +393,12 @@ OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/11/libgomp.so
 
 //Path to the pthread library for OpenMP
 OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.a
+
+//Arguments to supply to pkg-config
+PKG_CONFIG_ARGN:STRING=
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
 
 //Name of the computer/site where compile is being run
 SITE:STRING=sarodriguezva-Aspire-A315-41G
@@ -540,6 +611,36 @@ MAKECOMMAND-ADVANCED:INTERNAL=1
 MEMORYCHECK_COMMAND-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: MEMORYCHECK_SUPPRESSIONS_FILE
 MEMORYCHECK_SUPPRESSIONS_FILE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPIEXEC_EXECUTABLE
+MPIEXEC_EXECUTABLE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPIEXEC_MAX_NUMPROCS
+MPIEXEC_MAX_NUMPROCS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPIEXEC_NUMPROC_FLAG
+MPIEXEC_NUMPROC_FLAG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPIEXEC_POSTFLAGS
+MPIEXEC_POSTFLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPIEXEC_PREFLAGS
+MPIEXEC_PREFLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_C_HEADER_DIR
+MPI_C_HEADER_DIR-ADVANCED:INTERNAL=1
+//Result of TRY_COMPILE
+MPI_RESULT_C_test_mpi_normal:INTERNAL=FALSE
+//ADVANCED property for variable: MPI_event_core_LIBRARY
+MPI_event_core_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_event_pthreads_LIBRARY
+MPI_event_pthreads_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_hwloc_LIBRARY
+MPI_hwloc_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_m_LIBRARY
+MPI_m_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_mpi_LIBRARY
+MPI_mpi_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_open-pal_LIBRARY
+MPI_open-pal_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_open-rte_LIBRARY
+MPI_open-rte_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: MPI_z_LIBRARY
+MPI_z_LIBRARY-ADVANCED:INTERNAL=1
 //Result of TRY_COMPILE
 OpenMP_COMPILE_RESULT_CXX_fopenmp:INTERNAL=TRUE
 //Result of TRY_COMPILE
@@ -564,6 +665,10 @@ OpenMP_SPECTEST_C_:INTERNAL=TRUE
 OpenMP_gomp_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OpenMP_pthread_LIBRARY
 OpenMP_pthread_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_ARGN
+PKG_CONFIG_ARGN-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: SITE
 SITE-ADVANCED:INTERNAL=1
 

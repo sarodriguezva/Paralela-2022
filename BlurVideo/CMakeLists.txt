@@ -7,11 +7,12 @@ enable_testing()
 
 find_package(OpenCV REQUIRED)
 find_package(OpenMP REQUIRED)
+find_package(MPI REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
-add_executable(BlurVideo src/main_omp.cpp)
+add_executable(BlurVideo src/main_mpi.cpp)
 
-target_link_libraries(BlurVideo ${OpenCV_LIBS} OpenMP::OpenMP_CXX)
+target_link_libraries(BlurVideo ${OpenCV_LIBS} OpenMP::OpenMP_CXX PUBLIC MPI::MPI_CXX)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
