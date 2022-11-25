@@ -197,8 +197,10 @@ int main(int argc, char *argv[]){
         }
 
         MPI_Barrier(MPI_COMM_WORLD);
-        video.write(img);
-        cout << "Image saved" << endl;
+        if (rank == 0){
+            video.write(img);
+            cout << "Image saved" << endl;
+        }
     }
     MPI_Barrier(MPI_COMM_WORLD);
 
