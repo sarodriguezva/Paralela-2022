@@ -1,14 +1,18 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
   )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/mpiuser/Paralela-2022/BlurVideo/src/main_mpi.cpp" "/home/mpiuser/Paralela-2022/BlurVideo/build/CMakeFiles/BlurVideo.dir/src/main_mpi.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/sarodriguezva/Proyectos/Paralela-2022/BlurVideo/src/main_omp.cpp" "CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o" "gcc" "CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o.d"
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "/usr/local/include/opencv4"
+  "/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi"
+  "/usr/lib/x86_64-linux-gnu/openmpi/include"
   )
 
 # Targets to which this target links.

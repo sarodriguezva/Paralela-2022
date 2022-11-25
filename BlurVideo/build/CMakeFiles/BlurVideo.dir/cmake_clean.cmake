@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
   "BlurVideo"
   "BlurVideo.pdb"
-  "CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o"
-  "CMakeFiles/BlurVideo.dir/src/main_omp.cpp.o.d"
+  "CMakeFiles/BlurVideo.dir/src/main_mpi.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -134,6 +134,7 @@ int main(int argc, char *argv[]){
     MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    cout << "INIT" << endl;
     int THREADS = stoi(argv[3]);
 
     //Load Video
@@ -160,6 +161,7 @@ int main(int argc, char *argv[]){
     VideoWriter video(argv[2],cv::VideoWriter::fourcc('M','J','P','G'),10, Size(640,480));
 
     while (true){
+        cout << "Processing..." << endl;
         Mat img;
         cap >> img;
         if (img.empty()){
@@ -196,6 +198,7 @@ int main(int argc, char *argv[]){
 
         MPI_Barrier(MPI_COMM_WORLD);
         video.write(img);
+        cout << "Image saved" << endl;
     }
     MPI_Barrier(MPI_COMM_WORLD);
 
