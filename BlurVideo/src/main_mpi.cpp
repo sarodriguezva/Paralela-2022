@@ -63,14 +63,15 @@ the change on the original image. So the blur filter applies in-place.
 
 */
 
-void myBlur(Mat face, int w, int h, int procNum, int rank){
+Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     int area = pow(2*r+1, 2);
     int inner_h = h - 2*r;
     int range = inner_h / procNum;  //Charge for rank > 0
     int range_first = inner_h - range*(procNum - 1);  //Residual is loaded to rank 0
 
     Mat table = summed_table(face, w, h);
-
+    Mat partial_img;
+    
     int init_row, final_row;
     int init = r+1;
     int first_rank_final_row = init + range_first -1;
@@ -81,18 +82,28 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     }else if (rank == 0){
         init_row = init;
         final_row = first_rank_final_row;
+        range = range_first;
     }else{
         perror("Rank error");
         exit(-1);
     }
 
+    int sendbuf, sendcount, sendtype, recvcount, recvtype, root;
+
+    sendbuf = 
+    sendcount = range*w;
+
+    partial_img = Mat::zeros(face.size(), CV_32SC3);
+
     for (int y = init_row; y < final_row; y++){
-        for (int x = r+1; x < w-r-1; x++){
+        for (int x = init; x < w-init; x++){
             face.at<Vec3i>(y,x) = table.at<Vec3i>(y+r, x+r) - table.at<Vec3i>(y+r, x-r-1) 
                                 - table.at<Vec3i>(y-r-1, x+r) + table.at<Vec3i>(y-r-1, x-r-1);
             face.at<Vec3i>(y,x) /= area;
         }
     }
+
+
 }
 
 /*
@@ -191,7 +202,7 @@ int main(int argc, char *argv[]){
             Mat faceROI = img(R);
             faceROI.convertTo(faceROI, CV_32SC3);
 
-            myBlur(faceROI, w, h, nprocs, rank);
+            img = myBlur(faceROI, w, h, nprocs, rank);
             MPI_Barrier(MPI_COMM_WORLD);
             img.convertTo(img, CV_8UC3);
         }
