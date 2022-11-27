@@ -1,6 +1,7 @@
 {
     "cmake.sourceDirectory": "${workspaceFolder}/BlurVideo",
     "files.associations": {
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "valarray": "cpp"
     }
 }

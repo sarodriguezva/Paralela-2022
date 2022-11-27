@@ -6,17 +6,13 @@
 using namespace std;
 
 __global__ void multiply_matrices(float *A, float *B, float *C, int size){
-    int x = blockIdx.x*blockDim.x+threadIdx.x;
-    int y = blockIdx.y*blockDim.y+threadIdx.y;
+    int COL = blockIdx.x*blockDim.x+threadIdx.x;
+    int ROW = blockIdx.y*blockDim.y+threadIdx.y;
 
     //TODO: Assign load
-    if (x < size && y < size){
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                for (int k = 0; k < size; k++){
-                    C[i*size + j] += A[i*size + k] * B[k*size + j];
-                }
-            }
+    if (COL < size && ROW < size){
+        for (int k = 0; k < size; k++){
+            C[row*size + col] += A[ROW*size + k] * B[k*size + COL];
         }
     }
 }
@@ -37,7 +33,6 @@ int main(int argc, char *argv[]) {
     //Receives m, n, p. Matrices dimensions.
     int n = stoi(argv[1]);
     int THREADS = stoi(argv[2]);
-    int num_blocks = stoi(argv[3]);
     int size = n*n*sizeof(float);
 
     srand(time(0));
@@ -52,7 +47,7 @@ int main(int argc, char *argv[]) {
         for (int j = 0; j < n; j++){
             A[i*n + j] = (float) rand()/RAND_MAX;
             B[i*n + j] = (float) rand()/RAND_MAX;
-            C[i*n + j] = 0;
+            C[i*n + j] = 0.0f;
         }
     }
 
@@ -60,7 +55,10 @@ int main(int argc, char *argv[]) {
     print_matrix(B, n, 'B');
 
     //CUDA WORK
+    //n*n threads distributed in n/THREADS blocks, each block has THREADS*THREADS threads.
     float *d_A , *d_B, *d_C;
+    dim3 threads_per_block(THREADS, THREADS);
+    dim3 num_blocks(ceil(n / threads_per_block.x), ceil(n / threads_per_block.y));
 
     cudaMalloc(&d_A, size);
     cudaMalloc(&d_B, size);
@@ -70,7 +68,7 @@ int main(int argc, char *argv[]) {
     cudaMemcpy(d_B, &B, size, cudaMemcpyHostToDevice);
     cudaMemcpy(d_C, &C, size, cudaMemcpyHostToDevice);
 
-    multiply_matrices<<<num_blocks, THREADS>>>(d_A, d_B, d_C, n);
+    multiply_matrices<<<num_blocks, threads_per_block>>>(d_A, d_B, d_C, n);
 
     cudaMemcpy(&C, d_C, n, cudaMemcpyDeviceToHost);
 
