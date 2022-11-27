@@ -1,2 +1,3 @@
-clear
-time bin/omp 2
+#clear
+#varargs: MATRIX_SIZE, THREADS_NUM
+time bin/omp 10 4

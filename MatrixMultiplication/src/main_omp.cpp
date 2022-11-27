@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 
+#include "omp.h"
+
 using namespace std;
 
 void print_matrix(float *matrix, int size, char name){
@@ -20,6 +22,8 @@ void print_matrix(float *matrix, int size, char name){
 int main(int argc, char *argv[]) {
     //Receives m, n, p. Matrices dimensions.
     int n = stoi(argv[1]);
+    int THREADS = stoi(argv[2]);
+
     srand(time(0));
     
     float *A = (float *) malloc(n*n*sizeof(float));
@@ -35,17 +39,22 @@ int main(int argc, char *argv[]) {
             C[i*n + j] = 0;
         }
     }
-    
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < n; j++){
-            for (int k = 0; k < n; k++){
-                C[i*n + j] += A[i*n+k] * B[k*n + j];
-            }
-        }
-    }
 
     print_matrix(A, n, 'A');
     print_matrix(B, n, 'B');
+
+    #pragma omp parallel num_threads(THREADS)
+    {
+        #pragma omp for collapse(3) 
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+                for (int k = 0; k < n; k++){
+                    C[i*n + j] += A[i*n+k] * B[k*n + j];
+                }
+            }
+        }
+    }
+    
     print_matrix(C, n, 'C');
     
     free(A);

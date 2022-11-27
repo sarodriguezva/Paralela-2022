@@ -6,10 +6,10 @@ OBJ_DIR    = ./obj/
 
 #Generate OMP program binary
 omp: omp.o
-	g++ -Wall -o $(BIN_DIR)omp main_omp.o
+	g++ -Wall -O3 -fopenmp -o $(BIN_DIR)omp main_omp.o
 
 omp.o: $(SRC_DIR)main_omp.cpp
-	g++ -Wall -c $(SRC_DIR)main_omp.cpp
+	g++ -Wall -O3 -fopenmp -c $(SRC_DIR)main_omp.cpp
 
 #Generate CUDA program binary
 cuda: cuda.o
