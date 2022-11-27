@@ -2,18 +2,20 @@
 #include <time.h>
 #include <string>
 #include <iostream>
+#include <math.h>
 
 using namespace std;
 
-__global__ void multiply_matrices(float *A, float *B, float *C, int size){
+__global__ void multiply_matrices(float *A, float *B, float *C, int n){
     int COL = blockIdx.x*blockDim.x+threadIdx.x;
     int ROW = blockIdx.y*blockDim.y+threadIdx.y;
 
-    //TODO: Assign load
-    if (COL < size && ROW < size){
-        for (int k = 0; k < size; k++){
-            C[row*size + col] += A[ROW*size + k] * B[k*size + COL];
+    if (COL < n && ROW < n){
+        float sum = 0;
+        for (int k = 0; k < n; k++){
+            sum += A[ROW*n + k] * B[k*n + COL];
         }
+        C[ROW*n + COL] = sum;
     }
 }
 
@@ -47,31 +49,32 @@ int main(int argc, char *argv[]) {
         for (int j = 0; j < n; j++){
             A[i*n + j] = (float) rand()/RAND_MAX;
             B[i*n + j] = (float) rand()/RAND_MAX;
-            C[i*n + j] = 0.0f;
+            C[i*n + j] = 0;
         }
     }
-
-    print_matrix(A, n, 'A');
-    print_matrix(B, n, 'B');
 
     //CUDA WORK
     //n*n threads distributed in n/THREADS blocks, each block has THREADS*THREADS threads.
     float *d_A , *d_B, *d_C;
     dim3 threads_per_block(THREADS, THREADS);
-    dim3 num_blocks(ceil(n / threads_per_block.x), ceil(n / threads_per_block.y));
-
+    dim3 num_blocks(ceil((double) n / threads_per_block.x), ceil((double) n / threads_per_block.y));
+    
     cudaMalloc(&d_A, size);
     cudaMalloc(&d_B, size);
     cudaMalloc(&d_C, size);
 
-    cudaMemcpy(d_A, &A, size, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_B, &B, size, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_C, &C, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_A, A, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, B, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_C, C, size, cudaMemcpyHostToDevice);
 
     multiply_matrices<<<num_blocks, threads_per_block>>>(d_A, d_B, d_C, n);
+    cudaDeviceSynchronize();
 
-    cudaMemcpy(&C, d_C, n, cudaMemcpyDeviceToHost);
+    cudaMemcpy(C, d_C, size, cudaMemcpyDeviceToHost);
+    cudaDeviceSynchronize();
 
+    print_matrix(A, n, 'A');
+    print_matrix(B, n, 'B');
     print_matrix(C, n, 'C');
     
     cudaFree(d_A);
