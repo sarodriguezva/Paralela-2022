@@ -92,7 +92,7 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     int sendcount, recvcount;
     int *sendbuf;
     int *recvbuf;
-    sendcount = (w-init)*face.channels();
+    sendcount = (w-2*r)*face.channels();
     recvcount = sendcount;
 
     cout << "SENDCOUNT FOR " << rank << ": " << sendcount;
