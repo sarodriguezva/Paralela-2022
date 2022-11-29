@@ -64,6 +64,7 @@ the change on the original image. So the blur filter applies in-place.
 */
 
 Mat myBlur(Mat face, int w, int h, int procNum, int rank){
+    cout << "RECEIVED w,h: " << w << " " << h << endl;
     int area = pow(2*r+1, 2);
     int inner_h = h - 2*r;
     int range = inner_h / procNum;  //Charge for rank > 0
@@ -91,6 +92,10 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     int sendcount, recvcount;
     int *sendbuf;
     int *recvbuf;
+    sendcount = (w-init)*face.channels();
+    recvcount = sendcount;
+
+    cout << "SENDCOUNT FOR " << rank << ": " << sendcount;
 
     cout << "STARTING PIXEL CALCS IN " << rank << endl;
     for (int y = init_row; y < final_row; y++){
@@ -108,12 +113,9 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
         sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
         recvbuf = &face.at<Vec3i>(init_row + i, r)[0];
 
-        sendcount = (w-init)*face.channels();
-        recvcount = sendcount;
         MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, 0, MPI_COMM_WORLD);
     }
     cout << "ALL SENT FROM " << rank << endl;
-    MPI_Barrier(MPI_COMM_WORLD);
     return face;
 }
 
