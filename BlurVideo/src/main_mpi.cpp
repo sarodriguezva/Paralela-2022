@@ -102,6 +102,7 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     }
     MPI_Barrier(MPI_COMM_WORLD);
     cout << "PIXELS CALCULATED, SENDING TO ROOT FROM "  << rank << endl;
+    cout << "RANGE " << rank << ": " << range << endl;
     for (int i = 0; i < range; i++){
         cout << "SENDING ... " << rank << " " << i << endl;
         sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
