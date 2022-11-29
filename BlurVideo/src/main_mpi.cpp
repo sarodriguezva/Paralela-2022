@@ -89,8 +89,11 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     }
 
     int sendcount, recvcount, root;
-    int *sendbuf = &face.at<Vec3i>(init_row, r);
-    int *recvbuf = &face.at<Vec3i>(range_first, r);
+    int *sendbuf;
+    int *recvbuf;
+
+    sendbuf = &face.at<Vec3i>(init_row, r);
+    recvbuf = &face.at<Vec3i>(range_first, r);
 
     sendcount = (w-init)*face.channels();
     recvcount = sendcount;
