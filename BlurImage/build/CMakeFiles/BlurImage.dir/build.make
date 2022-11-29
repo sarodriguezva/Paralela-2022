@@ -57,27 +57,27 @@ include CMakeFiles/BlurImage.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/BlurImage.dir/flags.make
 
-CMakeFiles/BlurImage.dir/src/main.cpp.o: CMakeFiles/BlurImage.dir/flags.make
-CMakeFiles/BlurImage.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mpiuser/Paralela-2022/BlurImage/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BlurImage.dir/src/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BlurImage.dir/src/main.cpp.o -c /home/mpiuser/Paralela-2022/BlurImage/src/main.cpp
+CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o: CMakeFiles/BlurImage.dir/flags.make
+CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o: ../src/main_mpi.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/mpiuser/Paralela-2022/BlurImage/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o -c /home/mpiuser/Paralela-2022/BlurImage/src/main_mpi.cpp
 
-CMakeFiles/BlurImage.dir/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BlurImage.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mpiuser/Paralela-2022/BlurImage/src/main.cpp > CMakeFiles/BlurImage.dir/src/main.cpp.i
+CMakeFiles/BlurImage.dir/src/main_mpi.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BlurImage.dir/src/main_mpi.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/mpiuser/Paralela-2022/BlurImage/src/main_mpi.cpp > CMakeFiles/BlurImage.dir/src/main_mpi.cpp.i
 
-CMakeFiles/BlurImage.dir/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BlurImage.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mpiuser/Paralela-2022/BlurImage/src/main.cpp -o CMakeFiles/BlurImage.dir/src/main.cpp.s
+CMakeFiles/BlurImage.dir/src/main_mpi.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BlurImage.dir/src/main_mpi.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/mpiuser/Paralela-2022/BlurImage/src/main_mpi.cpp -o CMakeFiles/BlurImage.dir/src/main_mpi.cpp.s
 
 # Object files for target BlurImage
 BlurImage_OBJECTS = \
-"CMakeFiles/BlurImage.dir/src/main.cpp.o"
+"CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o"
 
 # External object files for target BlurImage
 BlurImage_EXTERNAL_OBJECTS =
 
-BlurImage: CMakeFiles/BlurImage.dir/src/main.cpp.o
+BlurImage: CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o
 BlurImage: CMakeFiles/BlurImage.dir/build.make
 BlurImage: /usr/local/lib/libopencv_gapi.so.4.6.0
 BlurImage: /usr/local/lib/libopencv_highgui.so.4.6.0
@@ -94,6 +94,10 @@ BlurImage: /usr/local/lib/libopencv_features2d.so.4.6.0
 BlurImage: /usr/local/lib/libopencv_flann.so.4.6.0
 BlurImage: /usr/local/lib/libopencv_imgproc.so.4.6.0
 BlurImage: /usr/local/lib/libopencv_core.so.4.6.0
+BlurImage: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
+BlurImage: /usr/lib/x86_64-linux-gnu/libpthread.so
+BlurImage: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so
+BlurImage: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so
 BlurImage: CMakeFiles/BlurImage.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/mpiuser/Paralela-2022/BlurImage/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable BlurImage"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/BlurImage.dir/link.txt --verbose=$(VERBOSE)

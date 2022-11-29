@@ -520,32 +520,32 @@ BlurImage/fast:
 	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/build
 .PHONY : BlurImage/fast
 
-src/main.o: src/main.cpp.o
+src/main_mpi.o: src/main_mpi.cpp.o
 
-.PHONY : src/main.o
+.PHONY : src/main_mpi.o
 
 # target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
+src/main_mpi.cpp.o:
+	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/src/main_mpi.cpp.o
+.PHONY : src/main_mpi.cpp.o
 
-src/main.i: src/main.cpp.i
+src/main_mpi.i: src/main_mpi.cpp.i
 
-.PHONY : src/main.i
+.PHONY : src/main_mpi.i
 
 # target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
+src/main_mpi.cpp.i:
+	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/src/main_mpi.cpp.i
+.PHONY : src/main_mpi.cpp.i
 
-src/main.s: src/main.cpp.s
+src/main_mpi.s: src/main_mpi.cpp.s
 
-.PHONY : src/main.s
+.PHONY : src/main_mpi.s
 
 # target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
+src/main_mpi.cpp.s:
+	$(MAKE) -f CMakeFiles/BlurImage.dir/build.make CMakeFiles/BlurImage.dir/src/main_mpi.cpp.s
+.PHONY : src/main_mpi.cpp.s
 
 # Help Target
 help:
@@ -587,9 +587,9 @@ help:
 	@echo "... ContinuousTest"
 	@echo "... ContinuousSubmit"
 	@echo "... BlurImage"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
+	@echo "... src/main_mpi.o"
+	@echo "... src/main_mpi.i"
+	@echo "... src/main_mpi.s"
 .PHONY : help
 
 
