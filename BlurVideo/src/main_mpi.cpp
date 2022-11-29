@@ -88,16 +88,10 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
         exit(-1);
     }
 
-    int sendcount, recvcount, root;
+    int sendcount, recvcount;
     int *sendbuf;
     int *recvbuf;
 
-    sendbuf = &face.at<Vec3i>(init_row, r)[0];
-    recvbuf = &face.at<Vec3i>(range_first, r)[0];
-
-    sendcount = (w-init)*face.channels();
-    recvcount = sendcount;
-    root = 0;
     cout << "STARTING PIXEL CALCS IN " << rank << endl;
     for (int y = init_row; y < final_row; y++){
         for (int x = init; x < w-init; x++){
@@ -110,10 +104,15 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     cout << "PIXELS CALCULATED, SENDING TO ROOT FROM "  << rank << endl;
     for (int i = 0; i < range; i++){
         cout << "SENDING ... " << rank << " " << i << endl;
-        MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, root, MPI_COMM_WORLD);
+        sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
+        recvbuf = &face.at<Vec3i>(init_row + i, r)[0];
+
+        sendcount = (w-init)*face.channels();
+        recvcount = sendcount;
+        MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, 0, MPI_COMM_WORLD);
     }
-    MPI_Barrier(MPI_COMM_WORLD);
     cout << "ALL SENT FROM " << rank << endl;
+    MPI_Barrier(MPI_COMM_WORLD);
     return face;
 }
 
