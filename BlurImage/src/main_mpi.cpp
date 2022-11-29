@@ -63,7 +63,7 @@ the change on the original image. So the blur filter applies in-place.
 
 */
 
-Mat myBlur(Mat face, int w, int h, int procNum, int rank){
+void myBlur(Mat face, int w, int h, int procNum, int rank){
     int area = pow(2*r+1, 2);
     int inner_h = h - 2*r;
     int range = inner_h / procNum;  //Charge for rank > 0
@@ -111,7 +111,6 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
         MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, 0, MPI_COMM_WORLD);
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    return face;
 }
 
 /*
@@ -199,7 +198,7 @@ int main(int argc, char *argv[]){
         Mat faceROI = img(R);
         faceROI.convertTo(faceROI, CV_32SC3);
 
-        img = myBlur(faceROI, w, h, nprocs, rank);
+        myBlur(faceROI, w, h, nprocs, rank);
         img.convertTo(img, CV_8UC3);
     }
 
