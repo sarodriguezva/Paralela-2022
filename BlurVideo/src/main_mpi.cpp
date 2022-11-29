@@ -71,7 +71,7 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
 
     Mat table = summed_table(face, w, h);
     Mat partial_img;
-    
+
     int init_row, final_row;
     int init = r+1;
     int first_rank_final_row = init + range_first -1;
@@ -88,12 +88,13 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
         exit(-1);
     }
 
-    int sendbuf, sendcount, sendtype, recvcount, recvtype, root;
+    int sendcount, recvcount, root;
+    int *sendbuf = &face.at<Vec3i>(init_row, r);
+    int *recvbuf = &face.at<Vec3i>(range_first, r);
 
-    sendbuf = 
-    sendcount = range*w;
-
-    partial_img = Mat::zeros(face.size(), CV_32SC3);
+    sendcount = (w-init)*face.channels();
+    recvcount = sendcount;
+    root = 0;
 
     for (int y = init_row; y < final_row; y++){
         for (int x = init; x < w-init; x++){
@@ -103,7 +104,11 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
         }
     }
 
+    for (int i = 0; i < range; i++){
+        MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, root, MPI_COMM_WORLD);
+    }
 
+    return face;
 }
 
 /*
