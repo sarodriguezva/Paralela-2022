@@ -74,12 +74,12 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     cout << "TABLE SUMMED IN " << rank << endl;
 
     int init_row, final_row;
-    int init = r+1;
-    int first_rank_final_row = init + range_first -1;
+    int init = r;
+    int first_rank_final_row = init + range_first;
 
     if (rank > 0){
         init_row = first_rank_final_row + 1 + (rank-1)*range;
-        final_row = init_row + range -1;
+        final_row = init_row + range;
     }else if (rank == 0){
         init_row = init;
         final_row = first_rank_final_row;
@@ -93,6 +93,9 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     int *sendbuf;
     int *recvbuf;
     sendcount = (w-2*r)*face.channels();
+    if (rank == 0){
+        sendcount = 0;
+    }
     recvcount = sendcount;
 
     cout << "SENDCOUNT FOR " << rank << ": " << sendcount;
