@@ -64,14 +64,12 @@ the change on the original image. So the blur filter applies in-place.
 */
 
 Mat myBlur(Mat face, int w, int h, int procNum, int rank){
-    cout << "RECEIVED w,h: " << w << " " << h << endl;
     int area = pow(2*r+1, 2);
     int inner_h = h - 2*r;
     int range = inner_h / procNum;  //Charge for rank > 0
     int range_first = inner_h - range*(procNum - 1);  //Residual is loaded to rank 0
 
     Mat table = summed_table(face, w, h);
-    cout << "TABLE SUMMED IN " << rank << endl;
 
     int init_row, final_row;
     int init = r;
@@ -98,9 +96,6 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     }
     recvcount = sendcount;
 
-    cout << "SENDCOUNT FOR " << rank << ": " << sendcount;
-
-    cout << "STARTING PIXEL CALCS IN " << rank << endl;
     for (int y = init_row; y < final_row; y++){
         for (int x = init; x < w-init; x++){
             face.at<Vec3i>(y,x) = table.at<Vec3i>(y+r, x+r) - table.at<Vec3i>(y+r, x-r-1) 
@@ -109,17 +104,12 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
         }
     }
     MPI_Barrier(MPI_COMM_WORLD);
-    cout << "PIXELS CALCULATED, SENDING TO ROOT FROM "  << rank << endl;
-    cout << "RANGE " << rank << ": " << range << endl;
-    cout << "INIT ROW " << rank << ": " << init_row << endl;
     for (int i = 0; i < range; i++){
-        cout << "SENDING ... " << rank << " " << i << endl;
         sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
         recvbuf = &face.at<Vec3i>(init_row + i, r)[0];
 
         MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, 0, MPI_COMM_WORLD);
     }
-    cout << "ALL SENT FROM " << rank << endl;
     MPI_Barrier(MPI_COMM_WORLD);
     return face;
 }
