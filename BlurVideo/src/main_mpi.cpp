@@ -70,7 +70,7 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     int range_first = inner_h - range*(procNum - 1);  //Residual is loaded to rank 0
 
     Mat table = summed_table(face, w, h);
-    Mat partial_img;
+    cout << "TABLE SUMMED" << endl;
 
     int init_row, final_row;
     int init = r+1;
@@ -98,7 +98,7 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
     sendcount = (w-init)*face.channels();
     recvcount = sendcount;
     root = 0;
-
+    cout << "STARTING PIXEL CALCS" << endl;
     for (int y = init_row; y < final_row; y++){
         for (int x = init; x < w-init; x++){
             face.at<Vec3i>(y,x) = table.at<Vec3i>(y+r, x+r) - table.at<Vec3i>(y+r, x-r-1) 
@@ -106,11 +106,13 @@ Mat myBlur(Mat face, int w, int h, int procNum, int rank){
             face.at<Vec3i>(y,x) /= area;
         }
     }
-
+    MPI_Barrier(MPI_COMM_WORLD);
+    cout << "PIXELS CALCULATED, SENDING TO ROOT" << endl;
     for (int i = 0; i < range; i++){
+        cout << "SENDING ... " << rank << " " << i << endl;
         MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, root, MPI_COMM_WORLD);
     }
-
+    cout << "ALL SENT" << endl;
     return face;
 }
 
@@ -211,7 +213,6 @@ int main(int argc, char *argv[]){
             faceROI.convertTo(faceROI, CV_32SC3);
 
             img = myBlur(faceROI, w, h, nprocs, rank);
-            MPI_Barrier(MPI_COMM_WORLD);
             img.convertTo(img, CV_8UC3);
         }
 
