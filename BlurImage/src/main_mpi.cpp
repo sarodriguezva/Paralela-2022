@@ -81,6 +81,7 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     }else if (rank == 0){
         init_row = init;
         final_row = first_rank_final_row;
+        range = range_first;
     }else{
         perror("Rank error");
         exit(-1);
@@ -104,11 +105,13 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     }
     MPI_Barrier(MPI_COMM_WORLD);
     for (int i = 0; i < range; i++){
+        cout << "SENDING FROM " << rank << " COUNT " << sendcount << " i " << i << endl;
         sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
         recvbuf = &face.at<Vec3i>(init_row + i, r)[0];
-        
         MPI_Send(sendbuf, sendcount, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        MPI_Barrier(MPI_COMM_WORLD);
         MPI_Recv(recvbuf, sendcount, MPI_INT, rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        MPI_Barrier(MPI_COMM_WORLD);
     }
     
     MPI_Barrier(MPI_COMM_WORLD);
