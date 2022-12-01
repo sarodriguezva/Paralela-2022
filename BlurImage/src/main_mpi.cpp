@@ -176,8 +176,6 @@ int main(int argc, char *argv[]){
 
     cout << "Processing..." << endl;
 
-    resize(img, img, Size(640,480));
-
     Mat img_gray;
     cvtColor(img, img_gray, COLOR_BGR2GRAY);
 
@@ -203,10 +201,8 @@ int main(int argc, char *argv[]){
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
-    if (rank == 0){
-        imwrite("../resources/lenna_filter.png", img);
-        cout << "Image saved" << endl;
-    }
+    imwrite("../resources/lenna_filter" + to_string(rank) + ".png", img);
+    cout << "Image saved" << endl;
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
     return 0;
