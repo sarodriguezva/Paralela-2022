@@ -106,8 +106,8 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     MPI_Barrier(MPI_COMM_WORLD);
     for (int i = 0; i < range; i++){
         cout << "SENDING FROM " << rank << " COUNT " << sendcount << " i " << i << endl;
-        sendbuf = face.ptr(init_row + i);
-        recvbuf = face.ptr(init_row + i);
+        sendbuf = face.ptr<int>(init_row + i);
+        recvbuf = face.ptr<int>(init_row + i);
         MPI_Send(sendbuf, sendcount, MPI_INT, 0, 0, MPI_COMM_WORLD);
         MPI_Barrier(MPI_COMM_WORLD);
         if (rank == 0){
