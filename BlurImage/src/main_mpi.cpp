@@ -3,7 +3,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/objdetect.hpp>
 #include <iostream>
-#include "mpi.h"
+#include <mpi.h>
 
 using namespace cv;
 using namespace std;
@@ -81,15 +81,14 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     }else if (rank == 0){
         init_row = init;
         final_row = first_rank_final_row;
-        range = range_first;
     }else{
         perror("Rank error");
         exit(-1);
     }
 
     int sendcount, recvcount;
-    int *sendbuf;
-    int *recvbuf;
+    void *sendbuf;
+    void *recvbuf;
     sendcount = (w-2*r)*face.channels();
     if (rank == 0){
         sendcount = 0;
@@ -107,9 +106,11 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     for (int i = 0; i < range; i++){
         sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
         recvbuf = &face.at<Vec3i>(init_row + i, r)[0];
-
-        MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, 0, MPI_COMM_WORLD);
+        
+        MPI_Send(sendbuf, sendcount, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        MPI_Recv(recvbuf, sendcount, MPI_INT, rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     }
+    
     MPI_Barrier(MPI_COMM_WORLD);
 }
 
@@ -201,8 +202,10 @@ int main(int argc, char *argv[]){
     }
 
     MPI_Barrier(MPI_COMM_WORLD);
-    imwrite("../resources/lenna_filter" + to_string(rank) + ".png", img);
-    cout << "Image saved" << endl;
+    if (rank == 0){
+        imwrite("../resources/lenna_filter.png", img);
+        cout << "Image saved" << endl;
+    }
     MPI_Barrier(MPI_COMM_WORLD);
     MPI_Finalize();
     return 0;
