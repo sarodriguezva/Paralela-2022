@@ -108,11 +108,11 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
         cout << "SENDING FROM " << rank << " COUNT " << sendcount << " i " << i << endl;
         sendbuf = &face.at<Vec3i>(init_row + i, r)[0];
         recvbuf = &face.at<Vec3i>(init_row + i, r)[0];
-        MPI_Send(sendbuf, sendcount, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        MPI_Send(&sendbuf, sendcount, MPI_INT, 0, 0, MPI_COMM_WORLD);
         MPI_Barrier(MPI_COMM_WORLD);
         if (rank == 0){
             for (int j = 1; j < procNum; j++){
-                MPI_Recv(recvbuf, recvcount, MPI_INT, j, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                MPI_Recv(&recvbuf, recvcount, MPI_INT, j, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                 cout << "RECEIVED FROM " << j << " COUNT " << recvcount << " i " << i << endl;
             }
         }
