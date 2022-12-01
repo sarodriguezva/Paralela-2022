@@ -88,8 +88,8 @@ void myBlur(Mat face, int w, int h, int procNum, int rank){
     }
 
     int sendcount, recvcount;
-    void *sendbuf;
-    void *recvbuf;
+    int *sendbuf;
+    int *recvbuf;
     sendcount = (w-2*r)*face.channels();
     if (rank == 0){
         sendcount = 0;
